@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TableFlow</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>TableFlow</h1>
+        <p>Export visible web tables in a few clicks.</p>
+      </div>
+      <span class="badge">Local only</span>
+    </header>
+
+    <button id="scan" class="primary" type="button">Scan this page</button>
+    <p id="status" class="status" aria-live="polite">No page scanned yet.</p>
+
+    <section id="results" hidden>
+      <label for="tableSelect">Detected table</label>
+      <select id="tableSelect"></select>
+
+      <div id="preview" aria-label="Preview of the first five rows"></div>
+      <p class="hint">Preview shows the first five rows. Exports include all detected rows.</p>
+
+      <label for="format">Export format</label>
+      <select id="format">
+        <option value="csv">CSV</option>
+        <option value="json">JSON</option>
+        <option value="markdown">Markdown</option>
+      </select>
+
+      <div class="actions">
+        <button id="copy" type="button">Copy</button>
+        <button id="download" class="primary" type="button">Download</button>
+      </div>
+    </section>
+
+    <footer>Table content never leaves your browser · v0.1.0</footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
