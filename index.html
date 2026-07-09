@@ -9,155 +9,28 @@
   <meta property="og:type" content="website" />
   <title>1688 Sourcing & Margin Copilot</title>
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    !(function(t,e){var o,n,p,r;e.__SV||((window.posthog=e),e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split('.');2===o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement('script')).type='text/javascript';p.crossOrigin='anonymous';p.async=!0;p.src=s.api_host.replace('.i.posthog.com','-assets.i.posthog.com')+'/static/array.js';(r=t.getElementsByTagName('script')[0]).parentNode.insertBefore(p,r);var u=e;void 0!==a?u=e[a]=[]:a='posthog';u.people=u.people||[];u.toString=function(t){var e='posthog';return' posthog'!==a&&(e+='.'+a),t||(e+=' (stub)'),e};u.people.toString=function(){return u.toString(1)+'.people (stub)'};o='init capture register register_once get_distinct_id'.split(' ');for(n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1))})(document,window.posthog||[]);
+    posthog.init('phc_rxTYNMa7g2ehLoiVWyuwPEejA8uzh3HWePPP3GDotDuN',{api_host:'https://us.i.posthog.com',defaults:'2026-05-30',person_profiles:'identified_only',capture_pageview:true,capture_pageleave:true});
+  </script>
+  <style>.payment-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:860px;margin:0 auto}.payment-card{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:#fff}.payment-card.featured-payment{border-color:var(--accent);box-shadow:0 18px 45px rgba(30,35,40,.1)}.payment-card strong{font-size:42px}.status-pill{display:inline-block;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;padding:6px 9px;border-radius:999px;background:#edf7f2;color:var(--green);margin-bottom:20px}.application-panel{display:grid;align-content:center;gap:18px}.application-points{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.application-points div{background:#fff;border:1px solid var(--line);padding:14px;border-radius:14px}.application-points strong,.application-points span{display:block}.application-points span{font-size:11px;color:var(--muted)}@media(max-width:850px){.payment-grid,.application-points{grid-template-columns:1fr}}</style>
 </head>
 <body>
-  <header class="nav shell">
-    <a class="brand" href="#top" aria-label="1688 Copilot home">
-      <span class="brand-mark">88</span>
-      <span>1688 Copilot</span>
-    </a>
-    <a class="nav-cta" href="#early-access">Join early access</a>
-  </header>
-
+  <header class="nav shell"><a class="brand" href="#top" aria-label="1688 Copilot home"><span class="brand-mark">88</span><span>1688 Copilot</span></a><a class="nav-cta application-link" href="https://us.posthog.com/external_surveys/019f407c-1a00-0000-6f82-1ebc66530140" target="_blank" rel="noopener">Join early access</a></header>
   <main id="top">
     <section class="hero shell">
-      <div class="hero-copy">
-        <div class="eyebrow">For Shopify, Amazon, Etsy and independent sellers</div>
-        <h1>Know your real profit <span>before</span> you source from 1688.</h1>
-        <p class="lede">Translate Chinese supplier pages, estimate landed cost, reveal margin, and generate bilingual supplier questions—in minutes, not spreadsheets.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#early-access">Join early access</a>
-          <button class="button ghost" id="loadSample" type="button">Try the sample</button>
-        </div>
-        <p class="microcopy">Private pilot · No payment required · First 20 sellers only</p>
-      </div>
-
-      <div class="app-card" aria-label="Interactive landed cost calculator">
-        <div class="window-bar"><span></span><span></span><span></span><strong>Profit preview</strong></div>
-        <div class="product-head">
-          <div class="product-icon">📦</div>
-          <div>
-            <div class="muted">1688 sample product</div>
-            <strong id="sampleTitle">Portable rechargeable desk lamp</strong>
-          </div>
-        </div>
-
-        <div class="grid inputs">
-          <label>Unit price (RMB)<input id="unitRmb" type="number" min="0" step="0.01" value="26.8"></label>
-          <label>Weight (kg)<input id="weightKg" type="number" min="0" step="0.01" value="0.65"></label>
-          <label>Shipping / kg (USD)<input id="shipRate" type="number" min="0" step="0.01" value="7.5"></label>
-          <label>Target price (USD)<input id="sellPrice" type="number" min="0" step="0.01" value="24.99"></label>
-          <label>Platform fee (%)<input id="platformFee" type="number" min="0" max="100" step="0.1" value="15"></label>
-          <label>RMB per USD<input id="fxRate" type="number" min="0.01" step="0.01" value="7.2"></label>
-        </div>
-
-        <div class="metrics">
-          <div><span>Landed cost</span><strong id="landedCost">$0.00</strong></div>
-          <div><span>Gross profit</span><strong id="grossProfit">$0.00</strong></div>
-          <div><span>Gross margin</span><strong id="grossMargin">0%</strong></div>
-        </div>
-        <div class="signal" id="marginSignal">Calculating…</div>
-      </div>
+      <div class="hero-copy"><div class="eyebrow">For Shopify, Amazon, Etsy and independent sellers</div><h1>Know your real profit <span>before</span> you source from 1688.</h1><p class="lede">Translate Chinese supplier pages, estimate landed cost, reveal margin, and generate bilingual supplier questions—in minutes, not spreadsheets.</p><div class="hero-actions"><a class="button primary application-link" href="https://us.posthog.com/external_surveys/019f407c-1a00-0000-6f82-1ebc66530140" target="_blank" rel="noopener">Get one product analyzed free</a><button class="button ghost" id="loadSample" type="button">Try the calculator</button></div><p class="microcopy">Private pilot · No card required for the free analysis · First 20 qualified sellers</p></div>
+      <div class="app-card" aria-label="Interactive landed cost calculator"><div class="window-bar"><span></span><span></span><span></span><strong>Profit preview</strong></div><div class="product-head"><div class="product-icon">📦</div><div><div class="muted">1688 sample product</div><strong id="sampleTitle">Portable rechargeable desk lamp</strong></div></div><div class="grid inputs"><label>Unit price (RMB)<input id="unitRmb" type="number" min="0" step="0.01" value="26.8"></label><label>Weight (kg)<input id="weightKg" type="number" min="0" step="0.01" value="0.65"></label><label>Shipping / kg (USD)<input id="shipRate" type="number" min="0" step="0.01" value="7.5"></label><label>Target price (USD)<input id="sellPrice" type="number" min="0" step="0.01" value="24.99"></label><label>Platform fee (%)<input id="platformFee" type="number" min="0" max="100" step="0.1" value="15"></label><label>RMB per USD<input id="fxRate" type="number" min="0.01" step="0.01" value="7.2"></label></div><div class="metrics"><div><span>Landed cost</span><strong id="landedCost">$0.00</strong></div><div><span>Gross profit</span><strong id="grossProfit">$0.00</strong></div><div><span>Gross margin</span><strong id="grossMargin">0%</strong></div></div><div class="signal" id="marginSignal">Calculating…</div></div>
     </section>
-
-    <section class="proof-strip">
-      <div class="shell proof-grid">
-        <div><strong>3 minutes</strong><span>from Chinese page to a decision</span></div>
-        <div><strong>One view</strong><span>price, MOQ, shipping and margin</span></div>
-        <div><strong>Bilingual</strong><span>supplier questions ready to send</span></div>
-      </div>
-    </section>
-
-    <section class="section shell">
-      <div class="section-heading">
-        <div class="eyebrow">The workflow</div>
-        <h2>Stop copying between five different tools.</h2>
-      </div>
-      <div class="steps">
-        <article><div class="step-num">01</div><h3>Open a 1688 page</h3><p>See clear English product details, variants, MOQ and supplier information.</p></article>
-        <article><div class="step-num">02</div><h3>Calculate the real cost</h3><p>Add shipping, platform fees and target price to reveal margin and break-even.</p></article>
-        <article><div class="step-num">03</div><h3>Decide and contact</h3><p>Generate bilingual supplier questions and export your research to Google Sheets.</p></article>
-      </div>
-    </section>
-
-    <section class="section dark-section">
-      <div class="shell split">
-        <div>
-          <div class="eyebrow light">Built for sourcing decisions</div>
-          <h2>Translation is not the product. A better decision is.</h2>
-        </div>
-        <ul class="check-list">
-          <li>Catch hidden costs before you request samples</li>
-          <li>Compare products with the same margin assumptions</li>
-          <li>Understand confusing Chinese variants and MOQ</li>
-          <li>Ask suppliers clearer questions without an agent</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section shell" id="pricing">
-      <div class="section-heading centered">
-        <div class="eyebrow">Early pricing test</div>
-        <h2>Choose the version you would actually pay for.</h2>
-        <p>This is a validation page. Your selection helps decide what we build first.</p>
-      </div>
-      <div class="pricing-grid">
-        <button class="price-card" data-plan="$19/month Pro">
-          <span class="plan">Pro</span><strong>$19<small>/month</small></strong><p>Unlimited product analysis, saved research and exports.</p><span class="pick">I would choose this</span>
-        </button>
-        <button class="price-card featured" data-plan="$149/year Founder Annual">
-          <span class="badge">Best early value</span><span class="plan">Founder Annual</span><strong>$149<small>/year</small></strong><p>Everything in Pro plus founder pricing locked for one year.</p><span class="pick">I would choose this</span>
-        </button>
-        <button class="price-card" data-plan="$199 one-time Setup Pack">
-          <span class="plan">Personal Setup</span><strong>$199<small> one time</small></strong><p>Your shipping, marketplace fees and target margin configured for you.</p><span class="pick">I would choose this</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="section shell" id="early-access">
-      <div class="signup-card">
-        <div>
-          <div class="eyebrow">Private pilot</div>
-          <h2>Get one product analyzed free.</h2>
-          <p>Tell us where you sell and paste one 1688 link. We will use the first requests to shape the pilot.</p>
-        </div>
-        <form id="waitlistForm">
-          <label>Email<input id="email" type="email" required placeholder="you@store.com"></label>
-          <div class="grid form-grid">
-            <label>Where do you sell?
-              <select id="channel" required><option value="">Select</option><option>Shopify</option><option>Amazon</option><option>Etsy</option><option>Independent store</option><option>Other</option></select>
-            </label>
-            <label>How often do you source?
-              <select id="frequency" required><option value="">Select</option><option>Weekly</option><option>Monthly</option><option>Rarely</option></select>
-            </label>
-          </div>
-          <label>Biggest problem
-            <select id="problem" required><option value="">Select</option><option>Translation</option><option>Shipping cost</option><option>MOQ and variants</option><option>Supplier trust</option><option>Listing creation</option></select>
-          </label>
-          <label>1688 product URL (optional)<input id="productUrl" type="url" placeholder="https://detail.1688.com/..."></label>
-          <label>Preferred plan
-            <select id="plan" required><option value="">Select</option><option>$19/month Pro</option><option>$149/year Founder Annual</option><option>$199 one-time Setup Pack</option><option>Free only</option></select>
-          </label>
-          <button class="button primary full" type="submit">Request early access</button>
-          <p class="form-note">This prototype opens a pre-filled email to PassionGrow. Nothing is uploaded automatically.</p>
-        </form>
-      </div>
-    </section>
-
-    <section class="faq shell section">
-      <div class="section-heading"><div class="eyebrow">FAQ</div><h2>What this pilot is—and is not.</h2></div>
-      <details><summary>Is this affiliated with 1688 or Alibaba?</summary><p>No. This is an independent sourcing research tool and is not affiliated with or endorsed by 1688 or Alibaba.</p></details>
-      <details><summary>Does the margin estimate guarantee my profit?</summary><p>No. It is an estimate based on the values you enter. Freight, duties, returns, advertising and other costs may change the result.</p></details>
-      <details><summary>Will you place orders or handle payments?</summary><p>No. The first version is a research and decision tool only. It does not place orders or hold funds.</p></details>
-      <details><summary>Where is my data stored?</summary><p>The calculator runs in your browser. This validation prototype sends nothing unless you choose to open and send the early-access email.</p></details>
-    </section>
+    <section class="proof-strip"><div class="shell proof-grid"><div><strong>3 minutes</strong><span>from Chinese page to a decision</span></div><div><strong>One view</strong><span>price, MOQ, shipping and margin</span></div><div><strong>Bilingual</strong><span>supplier questions ready to send</span></div></div></section>
+    <section class="section shell"><div class="section-heading"><div class="eyebrow">The workflow</div><h2>Stop copying between five different tools.</h2></div><div class="steps"><article><div class="step-num">01</div><h3>Open a 1688 page</h3><p>See clear English product details, variants, MOQ and supplier information.</p></article><article><div class="step-num">02</div><h3>Calculate the real cost</h3><p>Add shipping, platform fees and target price to reveal margin and break-even.</p></article><article><div class="step-num">03</div><h3>Decide and contact</h3><p>Generate bilingual supplier questions and export your research to Google Sheets.</p></article></div></section>
+    <section class="section dark-section"><div class="shell split"><div><div class="eyebrow light">Built for sourcing decisions</div><h2>Translation is not the product. A better decision is.</h2></div><ul class="check-list"><li>Catch hidden costs before you request samples</li><li>Compare products with the same margin assumptions</li><li>Understand confusing Chinese variants and MOQ</li><li>Ask suppliers clearer questions without an agent</li></ul></div></section>
+    <section class="section shell" id="pricing"><div class="section-heading centered"><div class="eyebrow">Early pricing</div><h2>Choose the version you would actually pay for.</h2><p>Monthly and annual software plans open after the MVP launches. The setup service is available now.</p></div><div class="pricing-grid"><button class="price-card" data-plan="$19/month Pro"><span class="plan">Pro</span><strong>$19<small>/month</small></strong><p>Unlimited product analysis, saved research and exports after the MVP launches.</p><span class="pick">Join the waitlist</span></button><button class="price-card featured" data-plan="$149/year Founder Annual"><span class="badge">Best early value</span><span class="plan">Founder Annual</span><strong>$149<small>/year</small></strong><p>Everything in Pro plus founder pricing locked for one year after launch.</p><span class="pick">Join the waitlist</span></button><button class="price-card" data-plan="$199 one-time Setup Pack"><span class="plan">Personal Setup</span><strong>$199<small> one time</small></strong><p>A hands-on cost, margin and supplier-question setup using your first product.</p><span class="pick">Buy now</span></button></div></section>
+    <section class="section shell" id="early-access"><div class="signup-card"><div><div class="eyebrow">Private pilot</div><h2>Get one product analyzed free.</h2><p>Answer six short questions and optionally paste one 1688 product link. The form opens on a secure hosted page.</p></div><div class="application-panel"><div class="application-points"><div><strong>2 minutes</strong><span>to complete</span></div><div><strong>No card</strong><span>for free analysis</span></div><div><strong>Human review</strong><span>for qualified requests</span></div></div><a class="button primary full application-link" href="https://us.posthog.com/external_surveys/019f407c-1a00-0000-6f82-1ebc66530140" target="_blank" rel="noopener">Start the pilot application</a><p class="form-note">We do not place orders or handle supplier payments.</p></div></div></section>
+    <section class="section shell" id="payment-options"><div class="section-heading centered"><div class="eyebrow">Live paid options</div><h2>Reserve a founder spot or get hands-on help now.</h2><p>Payments are processed securely by Stripe. The free application remains available above.</p></div><div class="payment-grid"><article class="payment-card"><span class="status-pill">Live checkout</span><div class="plan">Founder Pilot Deposit</div><strong>$29</strong><p>Reserve a founder pilot spot. The full amount is credited toward a future paid plan or setup service.</p><a class="button ghost full payment-link" data-offer="Founder Pilot Deposit" data-amount="29" href="https://buy.stripe.com/bJeaEWdD4for4yD6YhdfG00" target="_blank" rel="noopener">Pay $29 deposit</a></article><article class="payment-card featured-payment"><span class="status-pill">Available now</span><div class="plan">Personal Setup Pack</div><strong>$199</strong><p>A hands-on sourcing analysis with your real costs, target margin and bilingual supplier questions.</p><a class="button primary full payment-link" data-offer="Personal Setup Pack" data-amount="199" href="https://buy.stripe.com/28E14m2Yq903c15O2cfG01" target="_blank" rel="noopener">Buy the $199 setup pack</a></article></div><p class="form-note" style="text-align:center;margin-top:18px">Secure Stripe checkout opens in a new tab. Prices are in USD.</p></section>
+    <section class="faq shell section"><div class="section-heading"><div class="eyebrow">FAQ</div><h2>What this pilot is—and is not.</h2></div><details><summary>Is this affiliated with 1688 or Alibaba?</summary><p>No. This is an independent sourcing research tool and is not affiliated with or endorsed by 1688 or Alibaba.</p></details><details><summary>Does the margin estimate guarantee my profit?</summary><p>No. It is an estimate based on the values you enter. Freight, duties, returns, advertising and other costs may change the result.</p></details><details><summary>What does the $29 deposit include?</summary><p>It reserves a founder pilot spot and is credited in full toward a future paid plan or the Personal Setup Pack.</p></details><details><summary>What happens after buying the Setup Pack?</summary><p>Submit the pilot form before or after payment so we have your product details. We then prepare the sourcing analysis and supplier questions.</p></details></section>
   </main>
-
-  <footer class="footer shell">
-    <span>© 2026 PassionGrow</span>
-    <span>Independent prototype · Not affiliated with 1688 or Alibaba</span>
-  </footer>
-
+  <footer class="footer shell"><span>© 2026 PassionGrow</span><span>Independent prototype · Not affiliated with 1688 or Alibaba</span></footer>
   <script src="app.js"></script>
 </body>
 </html>
