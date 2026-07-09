@@ -12,8 +12,6 @@ $("scan").addEventListener("click", async () => {
 
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (!tab?.id) throw new Error("No active webpage is available.");
-
     const [{ result }] = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: extractTables
@@ -21,11 +19,11 @@ $("scan").addEventListener("click", async () => {
 
     datasets = result || [];
     if (!datasets.length) {
-      statusEl.textContent = "No visible HTML tables found on this page.";
+      statusEl.textContent = "No HTML tables found on this page.";
       return;
     }
 
-    tableSelect.replaceChildren();
+    tableSelect.innerHTML = "";
     datasets.forEach((dataset, index) => {
       const option = document.createElement("option");
       option.value = String(index);
@@ -44,127 +42,88 @@ $("scan").addEventListener("click", async () => {
 tableSelect.addEventListener("change", renderPreview);
 
 $("copy").addEventListener("click", async () => {
-  try {
-    const content = serialize(currentDataset(), $("format").value);
-    await navigator.clipboard.writeText(content);
-    statusEl.textContent = "Copied to clipboard.";
-  } catch (error) {
-    statusEl.textContent = `Could not copy: ${error.message}`;
-  }
+  const content = serialize(currentDataset(), $("format").value);
+  await navigator.clipboard.writeText(content);
+  statusEl.textContent = "Copied to clipboard.";
 });
 
 $("download").addEventListener("click", async () => {
-  try {
-    const format = $("format").value;
-    const content = serialize(currentDataset(), format);
-    const mimeTypes = {
-      csv: "text/csv",
-      json: "application/json",
-      markdown: "text/markdown"
-    };
-    const extension = format === "markdown" ? "md" : format;
-    const url = URL.createObjectURL(new Blob([content], { type: `${mimeTypes[format]};charset=utf-8` }));
-
-    await chrome.downloads.download({
-      url,
-      filename: `tableflow-export-${Date.now()}.${extension}`,
-      saveAs: true
-    });
-
-    setTimeout(() => URL.revokeObjectURL(url), 30000);
-    statusEl.textContent = "Export ready.";
-  } catch (error) {
-    statusEl.textContent = `Could not download: ${error.message}`;
-  }
+  const format = $("format").value;
+  const content = serialize(currentDataset(), format);
+  const mime = format === "json" ? "application/json" : "text/plain";
+  const extension = format === "markdown" ? "md" : format;
+  const url = URL.createObjectURL(new Blob([content], { type: `${mime};charset=utf-8` }));
+  await chrome.downloads.download({
+    url,
+    filename: `tableflow-export-${Date.now()}.${extension}`,
+    saveAs: true
+  });
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+  statusEl.textContent = "Export ready.";
 });
 
 function currentDataset() {
-  const data = datasets[Number(tableSelect.value || 0)];
-  if (!data) throw new Error("Scan a page before exporting.");
-  return data;
+  return datasets[Number(tableSelect.value || 0)];
 }
 
 function renderPreview() {
-  const data = datasets[Number(tableSelect.value || 0)];
+  const data = currentDataset();
   if (!data) return;
-
   const rows = data.rows.slice(0, 5);
-  const head = `<tr>${data.headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}</tr>`;
-  const body = rows
-    .map((row) => `<tr>${data.headers.map((_, index) => `<td>${escapeHtml(row[index] || "")}</td>`).join("")}</tr>`)
-    .join("");
-
+  const head = `<tr>${data.headers.map(h => `<th>${escapeHtml(h)}</th>`).join("")}</tr>`;
+  const body = rows.map(row => `<tr>${data.headers.map((_, i) => `<td>${escapeHtml(row[i] || "")}</td>`).join("")}</tr>`).join("");
   preview.innerHTML = `<table><thead>${head}</thead><tbody>${body}</tbody></table>`;
 }
 
 function serialize(data, format) {
   if (format === "json") {
-    return JSON.stringify(
-      data.rows.map((row) => Object.fromEntries(data.headers.map((header, index) => [header, row[index] || ""]))),
-      null,
-      2
-    );
+    return JSON.stringify(data.rows.map(row =>
+      Object.fromEntries(data.headers.map((header, i) => [header, row[i] || ""]))
+    ), null, 2);
   }
 
   if (format === "markdown") {
-    const line = (row) => `| ${row.map((cell) => String(cell).replace(/\|/g, "\\|")).join(" | ")} |`;
-    return [line(data.headers), line(data.headers.map(() => "---")), ...data.rows.map(line)].join("\n");
+    const line = (row) => `| ${row.map(cell => String(cell).replace(/\|/g, "\\|")).join(" | ")} |`;
+    return [
+      line(data.headers),
+      line(data.headers.map(() => "---")),
+      ...data.rows.map(line)
+    ].join("\n");
   }
 
-  const csvCell = (value) => {
+  const csvCell = value => {
     const text = String(value ?? "");
     return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
   };
-
-  return [data.headers, ...data.rows].map((row) => row.map(csvCell).join(",")).join("\n");
+  return [data.headers, ...data.rows].map(row => row.map(csvCell).join(",")).join("\n");
 }
 
 function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[character]);
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+  })[char]);
 }
 
 function extractTables() {
   const clean = (value) => (value || "").replace(/\s+/g, " ").trim();
-  const isVisible = (element) => {
-    const style = window.getComputedStyle(element);
-    const rect = element.getBoundingClientRect();
-    return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
-  };
-  const makeHeadersUnique = (headers) => {
-    const counts = new Map();
-    return headers.map((header, index) => {
-      const base = header || `Column ${index + 1}`;
-      const count = (counts.get(base) || 0) + 1;
-      counts.set(base, count);
-      return count === 1 ? base : `${base} (${count})`;
-    });
-  };
 
   return [...document.querySelectorAll("table")]
-    .filter(isVisible)
     .map((table, tableIndex) => {
-      const allRows = [...table.querySelectorAll("tr")].filter((row) => row.closest("table") === table);
+      const allRows = [...table.querySelectorAll("tr")];
       if (!allRows.length) return null;
 
-      let headers = [...allRows[0].querySelectorAll(":scope > th, :scope > td")].map((cell) => clean(cell.innerText));
-      const startsWithHeader = allRows[0].querySelectorAll(":scope > th").length > 0;
-      const dataRows = startsWithHeader ? allRows.slice(1) : allRows;
-      const widths = dataRows.map((row) => row.querySelectorAll(":scope > th, :scope > td").length);
-      const width = Math.max(headers.length, ...widths, 0);
+      let headers = [...allRows[0].querySelectorAll("th,td")].map(cell => clean(cell.innerText));
+      const startsWithHeader = allRows[0].querySelectorAll("th").length > 0;
+      let dataRows = startsWithHeader ? allRows.slice(1) : allRows;
 
-      if (!startsWithHeader) headers = Array.from({ length: width }, (_, index) => `Column ${index + 1}`);
-      headers = makeHeadersUnique(headers);
+      const width = Math.max(headers.length, ...dataRows.map(row => row.querySelectorAll("th,td").length));
+      if (!startsWithHeader) headers = Array.from({ length: width }, (_, i) => `Column ${i + 1}`);
+      headers = headers.map((header, i) => header || `Column ${i + 1}`);
 
       const rows = dataRows
-        .map((row) => [...row.querySelectorAll(":scope > th, :scope > td")].map((cell) => clean(cell.innerText)))
-        .filter((row) => row.some(Boolean))
-        .map((row) => [...row, ...Array(Math.max(0, headers.length - row.length)).fill("")].slice(0, headers.length));
+        .map(row => [...row.querySelectorAll("th,td")].map(cell => clean(cell.innerText)))
+        .filter(row => row.some(Boolean))
+        .map(row => [...row, ...Array(Math.max(0, headers.length - row.length)).fill("")].slice(0, headers.length));
 
       if (!rows.length || headers.length < 2) return null;
       return { id: tableIndex, headers, rows };

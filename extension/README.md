@@ -1,50 +1,42 @@
-# TableFlow Extension — MVP v0.1.0
+# TableFlow – MVP
 
-TableFlow is a Manifest V3 browser extension that detects visible semantic HTML tables on the active webpage and exports them as CSV, JSON, or Markdown.
+A Manifest V3 Chrome extension that detects HTML tables on the active page and exports them as CSV, JSON, or Markdown.
 
 ## Install locally
 
-1. Open `chrome://extensions` in Chrome or `edge://extensions` in Microsoft Edge.
-2. Enable **Developer mode**.
-3. Choose **Load unpacked**.
-4. Select this `extension` folder.
-5. Open a normal webpage containing an HTML table.
-6. Click the TableFlow icon and choose **Scan this page**.
+1. Unzip this folder.
+2. Open `chrome://extensions`.
+3. Enable **Developer mode**.
+4. Choose **Load unpacked**.
+5. Select the unzipped `tableflow-extension` folder.
+6. Open a webpage containing an HTML table and click TableFlow.
 
-## Current scope
+## MVP scope
 
-- Detect visible HTML `<table>` elements after the user clicks Scan.
+- Detect visible HTML `<table>` elements.
 - Preview the first five rows.
 - Copy or download CSV, JSON, and Markdown.
-- Export all detected rows.
-- Keep all webpage processing inside the browser.
-- Use only `activeTab`, `scripting`, and `downloads` permissions.
+- Local-only processing.
+- Minimal permissions: active tab, scripting, downloads.
 
-## Known limitations
+## Planned paid boundary
 
-- Version 0.1 does not extract div-based cards or repeated lists.
-- It scans only the current page; pagination and infinite scrolling are not supported.
-- Merged cells are flattened.
-- Some browser-internal or protected pages cannot be scanned.
-- Complex interactive grids that do not use semantic table markup may not be detected.
+Free:
+- Single-page table extraction.
+- CSV/JSON/Markdown export.
+- Up to 100 rows per export.
 
-## Candidate paid features — validate before building
-
-- Repeated-list extraction for cards and search results.
+Pro:
+- Repeated-list extraction (cards and search results).
 - Multi-page and infinite-scroll capture.
 - Saved extraction templates.
 - Column cleanup and transformations.
-- Google Sheets or Notion sync.
-- Batch and scheduled exports.
+- Google Sheets / Notion sync.
+- Scheduled exports.
 
-These are hypotheses, not commitments. Build them only after a paying user confirms the need.
+## Known limitations
 
-## Manual smoke test
-
-1. Load the extension unpacked.
-2. Visit a page with one or more visible HTML tables.
-3. Confirm the table count and dimensions are correct.
-4. Preview the first five rows.
-5. Copy each export format.
-6. Download each export format and open the saved file.
-7. Confirm the extension reports a useful message on a page without tables.
+- Version 0.1 only detects semantic HTML tables.
+- It does not yet extract div-based repeated cards.
+- Merged cells are flattened.
+- Some protected browser pages cannot be scanned.

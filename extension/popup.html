@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -11,20 +11,18 @@
     <header>
       <div>
         <h1>TableFlow</h1>
-        <p>Export visible web tables in a few clicks.</p>
+        <p>Export visible web tables locally.</p>
       </div>
-      <span class="badge">Local only</span>
+      <span class="badge">Private</span>
     </header>
 
-    <button id="scan" class="primary" type="button">Scan this page</button>
-    <p id="status" class="status" aria-live="polite">No page scanned yet.</p>
+    <button id="scan" class="primary">Scan this page</button>
+    <p id="status" class="status">No page scanned yet.</p>
 
     <section id="results" hidden>
-      <label for="tableSelect">Detected table</label>
+      <label for="tableSelect">Detected data</label>
       <select id="tableSelect"></select>
-
-      <div id="preview" aria-label="Preview of the first five rows"></div>
-      <p class="hint">Preview shows the first five rows. Exports include all detected rows.</p>
+      <div id="preview"></div>
 
       <label for="format">Export format</label>
       <select id="format">
@@ -34,12 +32,12 @@
       </select>
 
       <div class="actions">
-        <button id="copy" type="button">Copy</button>
-        <button id="download" class="primary" type="button">Download</button>
+        <button id="copy">Copy</button>
+        <button id="download" class="primary">Download</button>
       </div>
     </section>
 
-    <footer>Table content never leaves your browser · v0.1.0</footer>
+    <footer>Data never leaves your browser.</footer>
   </main>
   <script src="popup.js"></script>
 </body>
