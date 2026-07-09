@@ -1,0 +1,10 @@
+{
+  "name": "tableflow-license-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --experimental-strip-types src/server.ts",
+    "test": "node --experimental-strip-types test/license.test.ts"
+  }
+}

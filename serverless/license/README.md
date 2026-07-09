@@ -1,8 +1,10 @@
 # TableFlow license backend
 
-This folder defines the production contract for the Founder Pro license service.
+This folder contains the local TableFlow Founder Pro license backend prototype.
 
-## Required endpoints
+Status: local/test only. It is not deployed and is not connected to a formal Stripe account.
+
+## Implemented endpoints
 
 - `POST /stripe/webhook`
   - Verify the Stripe signature.
@@ -26,6 +28,8 @@ This folder defines the production contract for the Founder Pro license service.
 
 Never place these values in the Chrome extension or commit them to GitHub.
 
+See `.env.example` for variable names only.
+
 ## Minimal license record
 
 - `license_id`
@@ -40,3 +44,23 @@ Never place these values in the Chrome extension or commit them to GitHub.
 ## Release blocker
 
 The extension intentionally ships with an empty `LICENSE_API_URL` on this branch. Production activation cannot work until a real HTTPS endpoint is deployed and configured.
+
+## Local run
+
+```text
+C:\Users\ltc_o\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe --experimental-strip-types src\server.ts
+```
+
+## Local test
+
+```text
+C:\Users\ltc_o\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe --experimental-strip-types test\license.test.ts
+```
+
+Expected:
+
+```text
+license backend tests ok
+```
+
+The tests use Stripe-style signatures generated locally with `whsec_test_only`. These fixtures are TEST ONLY and are not production credentials.
