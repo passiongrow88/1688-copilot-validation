@@ -1,8 +1,8 @@
 let datasets = [];
 let isPro = false;
 
-const PRICING_URL = "https://passiongrow88.github.io/1688-copilot-validation/tableflow-pricing/";
-const LICENSE_API_URL = ""; // Set to the production HTTPS endpoint before release.
+const PRICING_URL = chrome.runtime.getURL("pricing.html");
+const LICENSE_API_URL = globalThis.TABLEFLOW_LICENSE_API_URL || ""; // Set to the production HTTPS endpoint before release.
 
 const $ = (id) => document.getElementById(id);
 const statusEl = $("status");
@@ -15,10 +15,10 @@ initializePlan();
 $("upgrade").addEventListener("click", () => chrome.tabs.create({ url: PRICING_URL }));
 $("activate").addEventListener("click", activateLicense);
 $("clearLicense").addEventListener("click", async () => {
-  await chrome.storage.local.remove(["tableflowLicense", "tableflowPlan"]);
+  await chrome.storage.local.remove(["tableflowLicenseLast4", "tableflowLicenseVerifiedAt"]);
   setPlan(false);
   $("licenseKey").value = "";
-  $("licenseStatus").textContent = "Free plan active.";
+  $("licenseStatus").textContent = "Free plan active. Enter a license key to verify Pro again.";
 });
 
 $("scan").addEventListener("click", async () => {
@@ -98,9 +98,13 @@ $("download").addEventListener("click", async () => {
 });
 
 async function initializePlan() {
-  const saved = await chrome.storage.local.get(["tableflowLicense", "tableflowPlan"]);
-  if (saved.tableflowLicense) $("licenseKey").value = saved.tableflowLicense;
-  setPlan(saved.tableflowPlan === "pro");
+  const saved = await chrome.storage.local.get(["tableflowLicenseLast4", "tableflowLicenseVerifiedAt"]);
+  setPlan(false);
+  if (saved.tableflowLicenseLast4) {
+    $("licenseStatus").textContent = `Previous license ending ${saved.tableflowLicenseLast4} must be verified again before Pro features unlock.`;
+  } else {
+    $("licenseStatus").textContent = "Free plan active.";
+  }
 }
 
 async function activateLicense() {
@@ -125,10 +129,14 @@ async function activateLicense() {
     const result = await response.json();
     if (!result.active) throw new Error(result.message || "This license is not active.");
 
-    await chrome.storage.local.set({ tableflowLicense: key, tableflowPlan: "pro" });
+    await chrome.storage.local.set({
+      tableflowLicenseLast4: key.slice(-4),
+      tableflowLicenseVerifiedAt: new Date().toISOString()
+    });
     setPlan(true);
     $("licenseStatus").textContent = "Founder Pro activated.";
   } catch (error) {
+    await chrome.storage.local.remove(["tableflowLicenseLast4", "tableflowLicenseVerifiedAt"]);
     setPlan(false);
     $("licenseStatus").textContent = `Could not activate: ${error.message}`;
   }
