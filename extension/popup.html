@@ -13,7 +13,7 @@
         <h1>TableFlow</h1>
         <p>Export visible web tables in a few clicks.</p>
       </div>
-      <span class="badge">Local only</span>
+      <span id="planBadge" class="badge">Free</span>
     </header>
 
     <button id="scan" class="primary" type="button">Scan this page</button>
@@ -33,13 +33,30 @@
         <option value="markdown">Markdown</option>
       </select>
 
+      <label class="pro-row">
+        <input id="mergeTables" type="checkbox" />
+        <span>Merge compatible tables <strong>Pro</strong></span>
+      </label>
+
       <div class="actions">
         <button id="copy" type="button">Copy</button>
         <button id="download" class="primary" type="button">Download</button>
       </div>
     </section>
 
-    <footer>Table content never leaves your browser · v0.1.0</footer>
+    <section class="account">
+      <button id="upgrade" class="upgrade" type="button">Upgrade to Founder Pro · $39</button>
+      <details>
+        <summary>Activate or restore Pro</summary>
+        <label for="licenseKey">License key</label>
+        <input id="licenseKey" type="password" autocomplete="off" placeholder="TFP-…" />
+        <button id="activate" type="button">Verify license</button>
+        <button id="clearLicense" class="link-button" type="button">Use Free plan</button>
+        <p id="licenseStatus" class="hint" aria-live="polite"></p>
+      </details>
+    </section>
+
+    <footer>Table content is processed locally · v0.2.0 preview</footer>
   </main>
   <script src="popup.js"></script>
 </body>
