@@ -4,12 +4,13 @@
 }
 
 body {
-  width: 360px;
+  width: 380px;
   margin: 0;
   background: #f6f8fb;
 }
 
 main { padding: 16px; }
+[hidden] { display: none !important; }
 header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 h1 { font-size: 20px; margin: 0 0 4px; }
 p { margin: 0; color: #687386; font-size: 13px; }
@@ -42,6 +43,7 @@ button:focus-visible,
 select:focus-visible { outline: 3px solid rgba(23, 32, 51, 0.18); outline-offset: 2px; }
 button.primary { background: #172033; color: white; border-color: #172033; }
 button.primary:hover { background: #26334d; }
+button:disabled { cursor: not-allowed; opacity: 0.6; }
 
 .status { margin: 12px 0; min-height: 20px; }
 section { display: grid; gap: 10px; }
@@ -69,6 +71,48 @@ td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.upgrade {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e1e5ec;
+}
+
+.upgrade-button {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 9px;
+  padding: 10px 12px;
+  background: #eef2ff;
+  color: #243b7a;
+  border: 1px solid #c8d2ff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.upgrade-button:hover { background: #e3e9ff; }
+.upgrade p { margin-top: 6px; font-size: 11px; text-align: center; }
+
+.rating {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #dbe4ef;
+  border-radius: 9px;
+  background: #fff;
+  gap: 8px;
+  text-align: center;
+}
+
+.rating span { color: #495469; font-size: 12px; }
+.rating a { color: #172033; font-weight: 800; text-decoration: none; }
+.rating a:hover { text-decoration: underline; }
+.rating button {
+  padding: 7px 9px;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 footer { margin-top: 14px; text-align: center; color: #8992a3; font-size: 11px; }

@@ -18,6 +18,6 @@ TableFlow requests:
 - `scripting` so it can read HTML tables from that active page;
 - `downloads` so it can save an export when the user requests one.
 
-TableFlow does not use a remote backend in version 0.1.0.
+TableFlow does not use a remote backend in version 0.1.2.
 
 Questions can be sent to `passiongrow88@gmail.com`.

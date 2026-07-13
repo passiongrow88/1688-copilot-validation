@@ -31,6 +31,7 @@
         <option value="csv">CSV</option>
         <option value="json">JSON</option>
         <option value="markdown">Markdown</option>
+        <option value="xlsx">Excel (.xlsx)</option>
       </select>
 
       <div class="actions">
@@ -39,8 +40,20 @@
       </div>
     </section>
 
-    <footer>Table content never leaves your browser · v0.1.0</footer>
+    <section class="upgrade">
+      <a id="proUpgradeLink" class="upgrade-button" target="_blank" rel="noopener noreferrer">Unlock Pro &mdash; US$29 Lifetime</a>
+      <p>One-time early-bird price. Basic exports stay free.</p>
+    </section>
+
+    <section id="ratingPrompt" class="rating" hidden>
+      <span>Enjoying TableFlow?</span>
+      <a href="https://chromewebstore.google.com/detail/kfillajkflijbagdncmlagmlfgfddgjj/reviews" target="_blank" rel="noopener noreferrer">Rate us &#9733;</a>
+      <button id="dismissRating" type="button">Don't show again</button>
+    </section>
+
+    <footer>Table content never leaves your browser &middot; v0.1.2</footer>
   </main>
+  <script src="vendor/xlsx/xlsx.full.min.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

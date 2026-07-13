@@ -4,16 +4,37 @@ TableFlow is a lightweight browser extension that turns HTML tables into clean, 
 
 This repository is the **single official project** for the 90-day challenge to earn **USD 10,000 in revenue** from a browser extension.
 
-## Current MVP — v0.1.0
+## Current MVP - v0.1.2
 
 TableFlow can:
 
 - detect HTML tables on the active webpage;
 - show a preview of the first five rows;
-- export the selected table as CSV, JSON, or Markdown;
+- export the selected table as CSV, JSON, Markdown, or Excel;
 - copy the export to the clipboard;
 - download the export as a local file;
 - process everything locally in the browser.
+
+## Free
+
+- Unlimited basic HTML table export
+- CSV
+- JSON
+- Markdown
+- Excel
+- Local browser processing
+- No AI credits
+- No login
+
+## TableFlow Pro Lifetime
+
+- Early-bird price: USD 29 one time
+- Upcoming batch export
+- Saved extraction templates
+- Advanced extraction
+- Activation instructions will be sent to the payment email
+
+Pro features are planned early-access features. Do not expect automatic unlock until activation instructions are sent after payment.
 
 ## Repository structure
 
@@ -51,9 +72,9 @@ Before adding large features, validate that users will pay for the current workf
 ## Release status
 
 - Product name: **TableFlow**
-- Version: **0.1.0 MVP**
+- Version: **0.1.2 MVP**
 - Browser format: **Manifest V3**
-- Store status: **Not yet published**
+- Store status: **Published**
 - Data handling: **Local-only; no automatic transmission**
 
 See [`extension/README.md`](extension/README.md) for technical details and [`AGENTS.md`](AGENTS.md) for project priorities.

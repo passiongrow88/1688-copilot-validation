@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "TableFlow – Export Web Tables",
-  "version": "0.1.0",
-  "description": "Extract HTML tables from the current webpage and export them as CSV, JSON, or Markdown. Processing stays local.",
+  "version": "0.1.2",
+  "description": "Extract HTML tables from the current webpage and export them as CSV, JSON, Markdown, or Excel. Processing stays local.",
   "permissions": [
     "activeTab",
     "scripting",
-    "downloads"
+    "downloads",
+    "storage"
   ],
   "action": {
     "default_title": "TableFlow",
