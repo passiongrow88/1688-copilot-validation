@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "TableFlow – Export Web Tables",
+  "name": "TableFlow - Export HTML Tables to Excel",
   "version": "0.1.3",
-  "description": "Extract HTML tables from the current webpage and export them as CSV, JSON, Markdown, or Excel. Processing stays local.",
+  "description": "Export web tables to Excel (.xlsx), CSV, JSON and Markdown in one click. Local processing, Chinese support, no AI credits.",
   "permissions": [
     "activeTab",
     "scripting",
