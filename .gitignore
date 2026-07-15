@@ -1,1 +1,19 @@
 .vercel
+
+# Local secrets and release artifacts
+.env
+.env.*
+!.env.example
+*.zip
+*.mp4
+*.mov
+*.webm
+*.avi
+*.mkv
+*.log
+node_modules/
+screenshots/
+test-pages/
+TABLEFLOW-DEMO-ASSETS/
+TableFlow-Marketing-Assets*/
+codex-clipboard-*
