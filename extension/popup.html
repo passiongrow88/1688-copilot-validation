@@ -19,6 +19,11 @@
     <button id="scan" class="primary" type="button">Scan this page</button>
     <p id="status" class="status" aria-live="polite">No page scanned yet.</p>
 
+    <section id="quotaPanel" class="quota">
+      <strong id="quotaTitle">Free monthly exports</strong>
+      <span id="quotaDetail">Checking quota...</span>
+    </section>
+
     <section id="results" hidden>
       <label for="tableSelect">Detected table</label>
       <select id="tableSelect"></select>
@@ -41,19 +46,25 @@
     </section>
 
     <section class="upgrade">
-      <a id="proUpgradeLink" class="upgrade-button" target="_blank" rel="noopener noreferrer">Unlock Pro &mdash; US$29 Lifetime</a>
-      <p>One-time early-bird price. Basic exports stay free.</p>
+      <a id="proUpgradeLink" class="upgrade-button" target="_blank" rel="noopener noreferrer">Unlock Unlimited &mdash; US$25 Lifetime</a>
+      <p id="upgradeCopy">Use TableFlow without monthly export limits.</p>
+    </section>
+
+    <section id="paywall" class="paywall" hidden>
+      <strong>Your monthly free quota is full.</strong>
+      <p>Unlock lifetime unlimited exports for US$25 and keep working without waiting for next month.</p>
     </section>
 
     <section id="ratingPrompt" class="rating" hidden>
-      <span>Enjoying TableFlow?</span>
+      <span>You have used 5 of 10 free monthly exports. If TableFlow helps, a review supports us.</span>
       <a href="https://chromewebstore.google.com/detail/kfillajkflijbagdncmlagmlfgfddgjj/reviews" target="_blank" rel="noopener noreferrer">Rate us &#9733;</a>
       <button id="dismissRating" type="button">Don't show again</button>
     </section>
 
-    <footer>Table content never leaves your browser &middot; v0.1.2</footer>
+    <footer>Table content never leaves your browser &middot; v0.1.3</footer>
   </main>
   <script src="vendor/xlsx/xlsx.full.min.js"></script>
+  <script src="license.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

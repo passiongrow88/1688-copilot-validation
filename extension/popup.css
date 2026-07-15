@@ -51,6 +51,31 @@ label { font-size: 12px; font-weight: 700; color: #495469; }
 .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .hint { margin-top: -4px; font-size: 11px; }
 
+.quota,
+.paywall {
+  margin: 10px 0 12px;
+  padding: 10px;
+  border: 1px solid #dbe4ef;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.quota strong,
+.paywall strong {
+  font-size: 12px;
+}
+
+.quota span,
+.paywall p {
+  color: #687386;
+  font-size: 12px;
+}
+
+.paywall {
+  background: #fff8ec;
+  border-color: #f2d39b;
+}
+
 #preview {
   max-height: 160px;
   overflow: auto;

@@ -16,8 +16,9 @@ TableFlow requests:
 
 - `activeTab` so it can access only the webpage the user is actively viewing after the user interacts with the extension;
 - `scripting` so it can read HTML tables from that active page;
-- `downloads` so it can save an export when the user requests one.
+- `downloads` so it can save an export when the user requests one;
+- `storage` so it can remember local monthly export usage, rating prompt preferences, and signed Pro license status.
 
-TableFlow does not use a remote backend in version 0.1.2.
+TableFlow uses a remote endpoint only to verify Stripe checkout sessions and issue signed Pro license tokens. Exported webpage table content is not sent to that endpoint.
 
 Questions can be sent to `passiongrow88@gmail.com`.

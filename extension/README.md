@@ -1,4 +1,4 @@
-# TableFlow Extension - MVP v0.1.2
+# TableFlow Extension - MVP v0.1.3
 
 TableFlow is a Manifest V3 browser extension that detects visible semantic HTML tables on the active webpage and exports them as CSV, JSON, Markdown, or Excel.
 
@@ -32,16 +32,17 @@ TableFlow is a Manifest V3 browser extension that detects visible semantic HTML 
 - Local browser processing
 - No AI credits
 - No login
+- 10 free exports per month
 
 ## TableFlow Pro Lifetime
 
-- Early-bird price: USD 29 one time
+- Lifetime price: USD 25 one time
+- Unlimited exports after Stripe checkout
 - Upcoming batch export
 - Saved extraction templates
 - Advanced extraction
-- Activation instructions will be sent to the payment email
 
-The Pro purchase link is a public Stripe Payment Link. No Stripe secret key is stored in the extension.
+The Pro purchase link is a public Stripe Payment Link. Stripe verifies payment on the hosted license endpoint and the extension stores only a signed license token. No Stripe secret key is stored in the extension.
 
 ## Known limitations
 

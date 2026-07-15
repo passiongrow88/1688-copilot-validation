@@ -4,7 +4,7 @@ TableFlow is a lightweight browser extension that turns HTML tables into clean, 
 
 This repository is the **single official project** for the 90-day challenge to earn **USD 10,000 in revenue** from a browser extension.
 
-## Current MVP - v0.1.2
+## Current MVP - v0.1.3
 
 TableFlow can:
 
@@ -25,16 +25,17 @@ TableFlow can:
 - Local browser processing
 - No AI credits
 - No login
+- 10 free exports per month
 
 ## TableFlow Pro Lifetime
 
-- Early-bird price: USD 29 one time
+- Lifetime price: USD 25 one time
+- Unlimited exports after Stripe checkout
 - Upcoming batch export
 - Saved extraction templates
 - Advanced extraction
-- Activation instructions will be sent to the payment email
 
-Pro features are planned early-access features. Do not expect automatic unlock until activation instructions are sent after payment.
+Pro checkout verifies payment through a small license endpoint, then unlocks the extension on this browser. Table content still stays local.
 
 ## Repository structure
 
@@ -72,7 +73,7 @@ Before adding large features, validate that users will pay for the current workf
 ## Release status
 
 - Product name: **TableFlow**
-- Version: **0.1.2 MVP**
+- Version: **0.1.3 MVP**
 - Browser format: **Manifest V3**
 - Store status: **Published**
 - Data handling: **Local-only; no automatic transmission**

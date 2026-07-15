@@ -1,20 +1,18 @@
 let datasets = [];
 
-const RATING_MAX_EXPORTS = 3;
-const PRO_PAYMENT_URL = "https://buy.stripe.com/5kQ5kC7eGdgj4yD6YhdfG05";
-
 const $ = (id) => document.getElementById(id);
 const statusEl = $("status");
 const resultsEl = $("results");
+const quotaTitle = $("quotaTitle");
+const quotaDetail = $("quotaDetail");
 const tableSelect = $("tableSelect");
 const preview = $("preview");
 const formatSelect = $("format");
 const copyButton = $("copy");
 const downloadButton = $("download");
 const ratingPrompt = $("ratingPrompt");
+const paywall = $("paywall");
 const proUpgradeLink = $("proUpgradeLink");
-
-proUpgradeLink.href = PRO_PAYMENT_URL;
 
 $("scan").addEventListener("click", async () => {
   statusEl.textContent = "Scanning visible tables...";
@@ -52,7 +50,10 @@ $("scan").addEventListener("click", async () => {
 });
 
 tableSelect.addEventListener("change", renderPreview);
-formatSelect.addEventListener("change", updateFormatControls);
+formatSelect.addEventListener("change", () => {
+  updateFormatControls();
+  initMonetizationState().catch(() => {});
+});
 $("dismissRating").addEventListener("click", dismissRatingPrompt);
 
 copyButton.addEventListener("click", async () => {
@@ -62,11 +63,12 @@ copyButton.addEventListener("click", async () => {
       statusEl.textContent = "Excel files cannot be copied. Use Download instead.";
       return;
     }
+    if (!(await ensureExportAllowed())) return;
 
     const content = serializeText(currentDataset(), format);
     await navigator.clipboard.writeText(content);
     statusEl.textContent = "Copied to clipboard.";
-    await recordExportSuccess();
+    await recordExportSuccess("copy");
   } catch (error) {
     statusEl.textContent = `Could not copy: ${error.message}`;
   }
@@ -75,6 +77,8 @@ copyButton.addEventListener("click", async () => {
 downloadButton.addEventListener("click", async () => {
   try {
     const format = formatSelect.value;
+    if (!(await ensureExportAllowed())) return;
+
     const { blob, extension } = createExportBlob(currentDataset(), format);
     const url = URL.createObjectURL(blob);
 
@@ -86,14 +90,17 @@ downloadButton.addEventListener("click", async () => {
 
     setTimeout(() => URL.revokeObjectURL(url), 30000);
     statusEl.textContent = "Export ready.";
-    await recordExportSuccess();
+    await recordExportSuccess("download");
   } catch (error) {
     statusEl.textContent = `Could not download: ${error.message}`;
   }
 });
 
-initRatingPrompt();
+initMonetizationState();
 updateFormatControls();
+chrome.storage.onChanged.addListener(() => {
+  initMonetizationState().catch(() => {});
+});
 
 function currentDataset() {
   const data = datasets[Number(tableSelect.value || 0)];
@@ -195,25 +202,27 @@ function normalizeHeaders(headers) {
   });
 }
 
-async function initRatingPrompt() {
-  const state = await chrome.storage.local.get({
-    exportSuccessCount: 0,
-    userDismissedRatingPrompt: false
-  });
-  setRatingPromptVisibility(state);
+async function initMonetizationState() {
+  const entitlement = await TableFlowLicense.readEntitlement();
+  proUpgradeLink.href = entitlement.paymentUrl;
+  setQuotaUi(entitlement);
+  setRatingPromptVisibility(entitlement);
+}
+
+async function ensureExportAllowed() {
+  const entitlement = await TableFlowLicense.readEntitlement();
+  if (entitlement.isPro || entitlement.remaining > 0) return true;
+
+  statusEl.textContent = "Your monthly free quota is full. Unlock unlimited exports to keep going.";
+  paywall.hidden = false;
+  proUpgradeLink.focus();
+  return false;
 }
 
 async function recordExportSuccess() {
-  const state = await chrome.storage.local.get({
-    exportSuccessCount: 0,
-    userDismissedRatingPrompt: false
-  });
-  const nextState = {
-    ...state,
-    exportSuccessCount: state.exportSuccessCount + 1
-  };
-  await chrome.storage.local.set(nextState);
-  setRatingPromptVisibility(nextState);
+  const entitlement = await TableFlowLicense.recordFreeExport();
+  setQuotaUi(entitlement);
+  setRatingPromptVisibility(entitlement);
 }
 
 async function dismissRatingPrompt() {
@@ -222,8 +231,33 @@ async function dismissRatingPrompt() {
   ratingPrompt.hidden = true;
 }
 
-function setRatingPromptVisibility(state) {
-  ratingPrompt.hidden = state.userDismissedRatingPrompt || state.exportSuccessCount < 1 || state.exportSuccessCount > RATING_MAX_EXPORTS;
+function setQuotaUi(entitlement) {
+  if (entitlement.isPro) {
+    quotaTitle.textContent = "Pro unlocked";
+    quotaDetail.textContent = "Unlimited exports are active on this browser.";
+    paywall.hidden = true;
+    copyButton.disabled = formatSelect.value === "xlsx";
+    downloadButton.disabled = false;
+    return;
+  }
+
+  quotaTitle.textContent = "Free monthly exports";
+  quotaDetail.textContent = `${entitlement.used} of ${entitlement.limit} used this month.`;
+  paywall.hidden = entitlement.remaining > 0;
+  if (entitlement.remaining <= 0) {
+    copyButton.disabled = true;
+    downloadButton.disabled = true;
+  } else {
+    updateFormatControls();
+    downloadButton.disabled = false;
+  }
+}
+
+function setRatingPromptVisibility(entitlement) {
+  ratingPrompt.hidden =
+    entitlement.isPro ||
+    entitlement.userDismissedRatingPrompt ||
+    entitlement.used < entitlement.reviewPromptThreshold;
 }
 
 function escapeHtml(value) {
